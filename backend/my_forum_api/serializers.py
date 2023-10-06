@@ -3,20 +3,8 @@ from .models import UserProfile, Tag, Comment, Post
 from django.contrib.auth.models import User
 
 
-class UserSerialier(serializers.ModelSerializer):
-    """
-    Serialzes the in-built User class of django
-    """
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email',
-                  'first_name', 'last_name', 'owner']
-        extra_kwargs = {
-            'owner': {'read_only': True}
-        }
-
-
 class UserProfileSerializer(serializers.ModelSerializer):
+
     """
     Serializes the UserProfile
     """
@@ -33,6 +21,18 @@ class UserProfileSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'owner': {'read_only': True},
         }
+
+
+class UserSerialier(serializers.ModelSerializer):
+    """
+    Serialzes the in-built User class of django
+    """
+    userprofile = UserProfileSerializer(read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email',
+                  'first_name', 'last_name', 'userprofile']
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -52,16 +52,19 @@ class PostSerializer(serializers.ModelSerializer):
     Serializes the Post
     """
     comments = serializers.PrimaryKeyRelatedField(
+        read_only=True
+    )
+    tags = serializers.SlugRelatedField(
         many=True,
-        queryset=Comment.objects.all()
+        read_only=True,
+        slug_field='caption'
     )
 
     class Meta:
         model = Post
         fields = ['id', 'title', 'content', 'created_on',
-                  'edited', 'user_profile', 'tags', 'comments ']
+                  'edited', 'user_profile', 'tags', 'comments']
         extra_kwargs = {
-            'tags': {'read_only': True},
             'user_profile': {'read_only': True},
         }
 

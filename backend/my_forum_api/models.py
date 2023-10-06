@@ -9,6 +9,9 @@ class Tag(models.Model):
     """
     caption = models.CharField(max_length=20)
 
+    def __str__(self) -> str:
+        return self.caption
+
 
 class UserProfile(models.Model):
     """
@@ -32,6 +35,9 @@ class UserProfile(models.Model):
         on_delete=models.CASCADE
     )
 
+    def __str__(self) -> str:
+        return f'Profile: {self.owner.username}'
+
 
 class Post(models.Model):
     """
@@ -48,6 +54,9 @@ class Post(models.Model):
         on_delete=models.CASCADE
     )
     tags = models.ManyToManyField(Tag)
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class Comment(models.Model):

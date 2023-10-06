@@ -31,9 +31,9 @@ class IsReadOnly(permissions.BasePermission):
             return True
 
 
-class IsOwnerOrReadOnly(permissions.BasePermission):
+class IoroPost(permissions.BasePermission):
     """
-    Only allows owner to modify an object (has_object_permission)
+    IsOwnerOrReadOnly post (has_object_permission)
     """
 
     def has_object_permission(self, request, view, obj):
@@ -43,4 +43,49 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        return obj.user == request.user
+        return obj.user_profile.owner == request.user
+
+
+class IoroUser(permissions.BasePermission):
+    """
+    IsOwnerOrReadOnly user (has_object_permission)
+    """
+
+    def has_object_permission(self, request, view, obj):
+        """
+        Checks if authenticated user is the user
+        """
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj == request.user
+
+
+class IoroUserProfile(permissions.BasePermission):
+    """
+    IsOwnerOrReadOnly userprofile (has_object_permission)
+    """
+
+    def has_object_permission(self, request, view, obj):
+        """
+        Checks if authenticated user is the owner of the profile
+        """
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.owner == request.user
+
+
+class IoroComment(permissions.BasePermission):
+    """
+    IsOwnerOrReadOnly comment (has_object_permission)
+    """
+
+    def has_object_permission(self, request, view, obj):
+        """
+        Checks if authenticated user is the owner of the comment
+        """
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.post.user_profile.owner == request.user
