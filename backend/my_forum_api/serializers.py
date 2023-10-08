@@ -8,6 +8,10 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     Serializes the UserProfile
     """
+    comments = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Comment.objects.all()
+    )
     posts = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Post.objects.all()
@@ -17,7 +21,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = UserProfile
         fields = ['id', 'profile_image', 'about_me',
                   'last_login', 'created_on', 'owner',
-                  'posts']
+                  'posts', 'comments']
         extra_kwargs = {
             'owner': {'read_only': True},
         }
@@ -47,13 +51,25 @@ class TagSerializer(serializers.ModelSerializer):
         }
 
 
+class CommentSerializer(serializers.ModelSerializer):
+    """
+    Serializes the comment
+    """
+    class Meta:
+        model = Comment
+        fields = ['id', 'content', 'created_on',
+                  'edited', 'post', 'user_profile']
+        extra_kwargs = {
+            'post': {'read_only': True},
+            'user_profile': {'read_only': True},
+        }
+
+
 class PostSerializer(serializers.ModelSerializer):
     """
-    Serializes the Post
+    Serializes the Post for a list view
     """
-    comments = serializers.PrimaryKeyRelatedField(
-        read_only=True
-    )
+    comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     tags = serializers.SlugRelatedField(
         many=True,
         read_only=True,
@@ -66,16 +82,4 @@ class PostSerializer(serializers.ModelSerializer):
                   'edited', 'user_profile', 'tags', 'comments']
         extra_kwargs = {
             'user_profile': {'read_only': True},
-        }
-
-
-class CommentSerializer(serializers.ModelSerializer):
-    """
-    Serializes the comment
-    """
-    class Meta:
-        model = Comment
-        fields = ['id', 'content', 'created_on', 'edited', 'post']
-        extra_kwargs = {
-            'post': {'read_only': True},
         }

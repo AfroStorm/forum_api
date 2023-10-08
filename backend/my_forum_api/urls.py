@@ -1,15 +1,18 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import UserProfileView, TagView, CommentView, PostView, UserView
+from . import views
 
 router = DefaultRouter()
-router.register(r'users', UserView)
-router.register(r'user-profiles', UserProfileView)
-router.register(r'tags', TagView)
-router.register(r'comments', CommentView)
-router.register(r'posts', PostView)
+router.register(r'users', views.UserView)
+router.register(r'user-profiles', views.UserProfileView)
+router.register(r'tags', views.TagView)
+router.register(r'comments', views.CommentView, basename='RUD_comment_url')
+router.register(r'posts', views.PostView)
 
 
 urlpatterns = [
+    path('posts/<int:pk>/create/comment/',
+         views.CreateCommentView.as_view(), name='create_comment_url'),
+    path('login/', views.UserLoginApiView.as_view()),
     path('', include(router.urls))
 ]

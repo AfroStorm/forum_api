@@ -38,7 +38,7 @@ class IoroPost(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         """
-        Checks if authenticated user is owner of the object
+        Checks if authenticated user is owner of the post
         """
         if request.method in permissions.SAFE_METHODS:
             return True
@@ -88,4 +88,4 @@ class IoroComment(permissions.BasePermission):
         if request.method in permissions.SAFE_METHODS:
             return True
 
-        return obj.post.user_profile.owner == request.user
+        return obj.user_profile.owner == request.user

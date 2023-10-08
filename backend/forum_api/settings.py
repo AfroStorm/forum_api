@@ -34,6 +34,13 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ]
+}
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'my_forum_api',
 ]
 

@@ -68,7 +68,16 @@ class Comment(models.Model):
     edited = models.DateTimeField(auto_now=True)
 
     post = models.ForeignKey(
-        UserProfile,
+        Post,
         related_name='comments',
         on_delete=models.CASCADE
     )
+    user_profile = models.ForeignKey(
+        UserProfile,
+        related_name='comments',
+        on_delete=models.CASCADE,
+        null=True
+    )
+
+    def __str__(self) -> str:
+        return f'{self.created_on} - {self.content}'
