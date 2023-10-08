@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import UserProfile, Tag, Comment, Post
+from my_forum_api.models import UserProfile, Tag, Comment, Post
 from django.contrib.auth.models import User
 
 
@@ -10,11 +10,11 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     comments = serializers.PrimaryKeyRelatedField(
         many=True,
-        queryset=Comment.objects.all()
+        read_only=True
     )
     posts = serializers.PrimaryKeyRelatedField(
         many=True,
-        queryset=Post.objects.all()
+        read_only=True
     )
 
     class Meta:
@@ -31,7 +31,7 @@ class UserSerialier(serializers.ModelSerializer):
     """
     Serialzes the in-built User class of django
     """
-    userprofile = UserProfileSerializer(read_only=True)
+    userprofile = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = User
@@ -69,7 +69,10 @@ class PostSerializer(serializers.ModelSerializer):
     """
     Serializes the Post for a list view
     """
-    comments = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    comments = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True
+    )
     tags = serializers.SlugRelatedField(
         many=True,
         read_only=True,

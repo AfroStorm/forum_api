@@ -36,7 +36,7 @@ class UserProfile(models.Model):
     )
 
     def __str__(self) -> str:
-        return f'Profile: {self.owner.username}'
+        return f'id: {self.pk} Profile: {self.owner.username}'
 
 
 class Post(models.Model):
@@ -56,7 +56,7 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag)
 
     def __str__(self) -> str:
-        return self.title
+        return f'id: {self.pk} owner: {self.user_profile.owner}'
 
 
 class Comment(models.Model):
@@ -80,4 +80,4 @@ class Comment(models.Model):
     )
 
     def __str__(self) -> str:
-        return f'{self.created_on} - {self.content}'
+        return f'id: {self.pk} owner: {self.user_profile.owner}'

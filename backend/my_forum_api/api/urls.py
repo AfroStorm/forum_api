@@ -6,7 +6,7 @@ router = DefaultRouter()
 router.register(r'users', views.UserView)
 router.register(r'user-profiles', views.UserProfileView)
 router.register(r'tags', views.TagView)
-router.register(r'comments', views.CommentView, basename='RUD_comment_url')
+router.register(r'comments', views.CommentView)
 router.register(r'posts', views.PostView)
 
 

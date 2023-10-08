@@ -1,4 +1,3 @@
-from typing import Any
 from rest_framework.response import Response
 from rest_framework import status, generics
 from rest_framework.authentication import TokenAuthentication
@@ -7,7 +6,7 @@ from rest_framework.settings import api_settings
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.contrib.auth.models import User
-from .models import UserProfile, Tag, Comment, Post
+from my_forum_api.models import UserProfile, Tag, Comment, Post
 from .permissions import IsReadOnly, IoroPost,\
     IoroUser, IsListOnly, IoroUserProfile,\
     IoroComment
@@ -24,6 +23,7 @@ class UserView(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerialier
     permission_classes = [IoroUser]
+    filter_backends = []
 
 
 class UserProfileView(ModelViewSet):
