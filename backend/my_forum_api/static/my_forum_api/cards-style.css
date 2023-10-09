@@ -1,0 +1,8 @@
+.cards-link {
+    background-color: burlywood;
+    padding: 5px 10px;
+    border: 1px solid white;
+    border-radius: 7px;
+    text-decoration: none;
+    color: black;
+}

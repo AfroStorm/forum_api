@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+
+{% endblock %}
+{% block css_files %}
+  <link rel="stylesheet" href="{% static 'my_forum_api/cards-style.css' %}" />
+{% endblock %}
+
+{% block content %}
+  <div class="row mt-3">
+    <div class="col-md-4 offset-2">
+      {% include 'my_forum_api/includes/cards.html' %}
+    </div>
+  </div>
+{% endblock %}
+{% block scripts %}
+
+{% endblock %}

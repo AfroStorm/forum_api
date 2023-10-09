@@ -6,5 +6,5 @@ class MyForumApiConfig(AppConfig):
     name = 'my_forum_api'
 
     def ready(self) -> None:
-        import my_forum_api.signals
+        import my_forum_api.api.signals
         return super().ready()

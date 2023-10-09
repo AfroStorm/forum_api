@@ -1,4 +1,0 @@
-create a comment
-add the comment to a post 
-
-how to assign a comment to a post when saving it ?

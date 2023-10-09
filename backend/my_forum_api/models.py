@@ -47,6 +47,11 @@ class Post(models.Model):
     content = models.TextField()
     created_on = models.DateTimeField(auto_now_add=True)
     edited = models.DateTimeField(auto_now=True)
+    image = models.CharField(
+        max_length=500,
+        default='https://t3.ftcdn.net/jpg/02/48/42/64/360_F_248426448_NVKLyw'
+        'WqArG2ADUxDq6QprtIzsF82dMF.jpg'
+    )
 
     user_profile = models.ForeignKey(
         UserProfile,
